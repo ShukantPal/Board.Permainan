@@ -7,13 +7,8 @@ import com.silcos.board.Player;
 public abstract class PermainanPlayer extends Player {
 
     protected int mId;
-    public boolean mIsTurn = false;
 
     private boolean mWasInited = false;
-
-    protected void onFinishTurn() {
-        mIsTurn = false;
-    }
 
     public PermainanPlayer(BoardGame work, BoardGame.GameInputController inputController) {
         super(work, inputController);
@@ -25,26 +20,22 @@ public abstract class PermainanPlayer extends Player {
 
     @Override
     public void onTurn() {
-        this.mIsTurn = true;
+        super.onTurn();
     }
 
     public boolean isNetworked;
-
-    public boolean isTurn() {
-        return this.mIsTurn;
-    }
 
     protected void initialPlacement() {
         if(mId == 0) {
             for(int i = 0; i <= 1; i++) {
                 for(int j = 0; j < 6; j++) {
-                    boardController().getCell(i, j).setHolder(myPieces[(i)*6+j]);
+                    board().getCell(i, j).setHolder(myPieces[(i)*6+j]);
                 }
             }
         } else {
             for(int i = 4; i < 6; i++) {
                 for(int j = 0; j < 6; j++) {
-                    boardController().getCell(i, j).setHolder(myPieces[(i-4)*6+j]);
+                    board().getCell(i, j).setHolder(myPieces[(i-4)*6+j]);
                 }
             }
         }
@@ -61,7 +52,6 @@ public abstract class PermainanPlayer extends Player {
         final boolean moveDelv = deliverMove(new PermainanGame.Move(isVisible, srcRow, srcCol,
                 dstRow, dstCol, isLoopHinted));
 
-        if(moveDelv) mIsTurn = false;
         return moveDelv;
     }
 

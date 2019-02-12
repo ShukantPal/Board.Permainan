@@ -357,7 +357,6 @@ public class PermainanGame extends BoardGame {
 
         public void switchPlayer() {
             mAddedLongMoveToHistory = false;
-            ((PermainanPlayer) playerRotator.previousPlayer()).onFinishTurn();
             playerRotator.nextPlayer().onTurn();
 
             if (timer != null)
